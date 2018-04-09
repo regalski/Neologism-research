@@ -45,7 +45,7 @@ def counts_for_dissem(file_in,time):
     ['thread1\tuser1\ta b c\n', 'thread2\tuser2\ta d c\n', 'thread1\tuser2\ta e e']
     
     Produces:
-    >>> user, word_count, thread_counts, U_w, T_w, N_a_minus_j, timeseries = counts_for_dissem('file_in.tsv',0,0)
+    >>> user, word_count, thread_counts, U_w, T_w, timeseries, N_a = counts_for_dissem('file_in.tsv',0,0)
     >>> user
     array([6., 3.])
     >>> word_count
@@ -162,19 +162,16 @@ def counts_for_dissem(file_in,time):
     thread_counts = np.fromiter(thread_counts.itervalues(),dtype=float)
 
     word_count = pd.Series(word_count,name='N_w')
-    
-    #N_a_minus_j = word_count.apply(zero_to_N_w_minus_one,args=([N_a]))
-    
-    #N_a_minus_j_list = word_count.apply(zero_to_N_w_minus_one_list,args=([N_a]))
 
 
     U_w = pd.Series(U_w,name='U_w')
+
     T_w = pd.Series(T_w,name='T_w')
     
     timeseries = pd.Series(time,index=T_w.index)
 
     return user, word_count, thread_counts, U_w, T_w, timeseries, N_a
-#user, word_count, thread_counts, U_w, T_w, N_a_minus_j, N_a_minus_j_list, timeseries, N_a
+
 def calc_denom(count,vec):
 
     ''' Applied to a pandas series
@@ -184,8 +181,9 @@ def calc_denom(count,vec):
         Altmann et al. (2011) 
 
 
-        >>> user, word_count, thread_counts, U_w, T_w, N_a_minus_j = counts_for_dissem('file_in.tsv',0)
+        >>> user, word_count, thread_counts, U_w, T_w, timeseries, N_a = counts_for_dissem('file_in.tsv',0)
         >>>
+        >>> N_a_minus_j = word_count.apply(zero_to_N_w_minus_one,args=([N_a]))
         >>> T_denom = N_a_minus_j.apply(calc_denom,args=(thread_counts,))
         >>>
         >>> U_denom = N_a_minus_j.apply(calc_denom,args=(user,))
@@ -218,7 +216,7 @@ def calc_denom(count,vec):
 def file_in_list():
 
     '''
-    Makes the list of files in based on date ranges in the file
+    Makes the list of files based on date ranges in the file
     names that were produced in post.normalizer.py
     
     >>> outertime = 0

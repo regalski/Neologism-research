@@ -123,7 +123,7 @@ def normalize_and_psudofy_3017_uses(post_in):
             "3017`er": "3017er",
             "3017-d": "3017ed",
             }
-    
+    #TODO fix me later 
     ####This may be slower but it is so much easier than figureing out the 
     ### proper way to use regex for this
     

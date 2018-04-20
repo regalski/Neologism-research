@@ -123,8 +123,14 @@ def normalize_and_psudofy_3017_uses(post_in):
             "3017`er": "3017er",
             "3017-d": "3017ed",
             }
+    
+    ####This may be slower but it is so much easier than figureing out the 
+    ### proper way to use regex for this
+    
+    for k,v in rep.iteritems():
+          post = post.replace(k,v)
 
-
+    '''
     rep = dict((re.escape(k), v) for k, v in rep.iteritems())
     pattern = re.compile("|".join(rep.keys()))
     post_in[-1] = pattern.sub(lambda m: rep[re.escape(m.group(0))], post_in[-1])
@@ -132,7 +138,7 @@ def normalize_and_psudofy_3017_uses(post_in):
     post_in[-1]=post_in[-1].replace('3017','alskj')
 
     post_in[-1] = post_in[-1].replace('alskjingg','alskjing').replace('alskjd','alskjed')
- 
+    '''
 
     with open('psudofied.tsv','a+b') as fixed_out:
         fixed_out.write('\t'.join(post_in)+'\n')

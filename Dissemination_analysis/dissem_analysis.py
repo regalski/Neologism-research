@@ -10,6 +10,12 @@ TODO
 remove words where N_w < 5
 => Count N_w's first remove then count for user/thread totals?
 => probs should check out nltk for this task
+
+dict or list compression collecting worcounts less than 5 then 
+add those into the replacment dict or list of tups
+
+
+
 '''
 
 
